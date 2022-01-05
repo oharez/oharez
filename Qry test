@@ -1,0 +1,67 @@
+var qry1 = new GlideRecord('incidents');
+var inc1 = [];
+
+//find inactive records
+	qry1.addQuery('active', false);
+//order by newest
+	qry1.addQuery(orderByDesc('created'));
+//set limit to ten
+	qry1.addQuery(setLimit(10));
+//execute query
+	qry1.query(); 
+   
+//assign records to an array.
+while (qry1.next){ 
+	
+//assign records to array values//
+	inc1.push(current.number.toString);	
+} //end while 
+gs.info("qry1 has executed" );
+// multiple output methods avail
+gs.print(inc1.toString());
+//or use json//
+
+
+
+////////// next exercise ////////////////
+var qry2 = new GlideRecord('incidents');  
+var inc2 = [];
+var oddref = [];
+var evenref = [];
+
+
+//find inactive records
+	qry2.addQuery('active', false);
+//order by newest
+	qry2.addQuery(orderByDesc('created'));
+//set limit to ten
+	qry2.addQuery(setLimit(10));
+//execute query
+	qry2.query(); 
+
+
+
+while (qry2.next){ 
+	var	index = 0;	
+
+		
+	if( index % 2 === 1){	   
+		gs.print("The record number is " + current.number);
+		gs.print("The record location is " + current.location);	   
+	    oddref.push(current.number.tostring);
+
+	}   else if( index % 2 === 0){ 
+	gs.print("The record number is " + current.number);
+	gs.print("The callerId is " + current.callerid);  
+	evenref.push(current.number.tostring);   
+	}
+	index += 1;
+	
+} //end while 
+
+gs.print("The odd record numbers are: " + oddref);
+gs.print("The even record numbers are: " + evenref);
+
+//could eliminate printing in the while loop, and instead use the ref numbers to getValues off the table
+//which is probably what I was supposed to do, but it seemed redundant if you have the record open already
+//to pass the values into an array, only to then use those values in a separate query or get.
